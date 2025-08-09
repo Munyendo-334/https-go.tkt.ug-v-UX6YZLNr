@@ -398,25 +398,6 @@
         min-width: auto;
       }
     }
-
-    /* QR code container styles */
-    #qrcode {
-      margin: 20px auto 0 auto;
-      width: 128px;
-      height: 128px;
-      user-select: none;
-      cursor: pointer;
-    }
-    #qr-instruction {
-      text-align: center;
-      font-size: 0.9rem;
-      color: var(--subtitle);
-      margin-top: 6px;
-      user-select: none;
-      max-width: 530px;
-      margin-left: auto;
-      margin-right: auto;
-    }
   </style>
 </head>
 <body>
@@ -460,10 +441,6 @@
             Get Directions
           </button>
         </div>
-
-        <!-- QR Code container -->
-        <div id="qrcode" title="Scan ticket QR code"></div>
-        <div id="qr-instruction">Scan this QR code to verify your ticket</div>
       </section>
 
       <section class="next-steps" aria-label="Next Steps">
@@ -569,4 +546,5 @@
   </script>
 </body>
 </html>
+
 
