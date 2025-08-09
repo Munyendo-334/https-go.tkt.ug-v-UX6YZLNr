@@ -56,6 +56,7 @@
       font-size: 2em;
       border: 3px solid #fff;
       box-shadow: var(--shadow);
+      user-select: none;
     }
 
     h2 {
@@ -102,6 +103,12 @@
       left: 30px;
       top: 24px;
       user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    /* Verified state color */
+    .ticket-status.verified {
+      background: #109e3b; /* green */
     }
 
     .match-title {
@@ -391,22 +398,39 @@
         min-width: auto;
       }
     }
+
+    /* QR code container styles */
+    #qrcode {
+      margin: 20px auto 0 auto;
+      width: 128px;
+      height: 128px;
+      user-select: none;
+      cursor: pointer;
+    }
+    #qr-instruction {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--subtitle);
+      margin-top: 6px;
+      user-select: none;
+      max-width: 530px;
+      margin-left: auto;
+      margin-right: auto;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <div class="circle-check" aria-label="Success">
-        &#10004;
-      </div>
-      <h2>Hi, Adam Munyendo </h2>
+      <div class="circle-check" aria-label="Success">&#10004;</div>
+      <h2>Hi, Victor Omondi </h2>
       <h1 class="main-heading">You're All Set!</h1>
       <p class="subtitle">Your ticket is valid. Get ready for an amazing experience!</p>
     </header>
 
     <main>
       <section class="ticket-card" aria-label="Ticket Information">
-        <span class="ticket-status">VERIFIED TICKET</span>
+        <span id="ticket-status" class="ticket-status">VERIFIED TICKET</span>
         <h2 class="match-title">Kenya VS Morocco</h2>
 
         <div class="ticket-details">
@@ -424,9 +448,22 @@
 
         <div class="ticket-actions">
           <a href="#" class="link-support" aria-label="Contact Support">Contact Support</a>
-          <button type="button" class="share-btn" aria-label="Share Ticket">Share</button>
-          <button type="button" class="directions-btn" aria-label="Get Directions">Get Directions</button>
+          <button type="button" class="share-btn" aria-label="Share Ticket" id="shareBtn">Share</button>
+          <!-- Open Google Maps to Moi International Sports Centre -->
+          <button
+            type="button"
+            class="directions-btn"
+            aria-label="Get Directions"
+            id="directionsBtn"
+            title="Open Google Maps"
+          >
+            Get Directions
+          </button>
         </div>
+
+        <!-- QR Code container -->
+        <div id="qrcode" title="Scan ticket QR code"></div>
+        <div id="qr-instruction">Scan this QR code to verify your ticket</div>
       </section>
 
       <section class="next-steps" aria-label="Next Steps">
@@ -494,6 +531,41 @@
       </div>
     </footer>
   </div>
+
+  <!-- QRCode.js lib (minified) included inline -->
+  <script>
+  /*! QRCode.js v1.0.0 - simple QR code generator https://davidshimjs.github.io/qrcodejs/ */
+  // QRCode.js is quite long, so here I will include a minimal version inline:
+  // For full minified source: https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js
+  
+  // Instead I'll load it via CDN for simplicity:
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+  <script>
+    // Google Map location URL for Moi International Sports Centre
+    const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=Moi+International+Sports+Centre';
+
+    const directionsBtn = document.getElementById('directionsBtn');
+    directionsBtn.addEventListener('click', () => {
+      window.open(mapsUrl, '_blank');
+    });
+
+        // Toggle verification status on QR code click (simulate scan)
+    const ticketStatus = document.getElementById('ticket-status');
+    const qrCodeContainer = document.getElementById('qrcode');
+
+    qrCodeContainer.addEventListener('click', () => {
+      if (ticketStatus.textContent.includes('VERIFIED')) {
+        ticketStatus.textContent = 'TICKET VERIFIED';
+        ticketStatus.classList.add('verified');
+        alert('Ticket Verified! This ticket has now been verified.');
+      } else {
+        ticketStatus.textContent = 'VERIFIED TICKET';
+        ticketStatus.classList.remove('verified');
+        alert('Verification reset. Click QR again to verify.');
+      }
+    });
+  </script>
 </body>
 </html>
-
